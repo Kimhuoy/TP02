@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <style>
+        .container{
+          width: 684px;
+          height: 510px;
+          align-items: center;
+          border: 2px solid gray;
+          background-color:gray;
+          margin-left: 25%;
+          
+        }
+        #canvas{
+          padding: 2px;
+          background-color:white;
+          width: 680px;
+          height: 480px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="canvas"></canvas>
+        <span>Please show your face on me</span>
+        <button onclick="onclickTorender()">Click here</button>
+    </div>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var video = document.createElement('video');
+        video.autoplay = true
+        navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+            .then((stream) => {
+                video.srcObject = stream
+                
+            }).catch(err => {
+
+        })
+        function onclickTorender(){
+            (function loop() {
+                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                    setTimeout(loop, 1000 / 30);
+            })();
+           
+        }
+    </script>
+</body>
+</html>
